@@ -1,0 +1,44 @@
+A51 MACRO ASSEMBLER  TEST1_1                                                              10/19/2017 19:32:38 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.5.0
+OBJECT MODULE PLACED IN .\Objects\test1_1.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE test1_1.asm SET(SMALL) DEBUG PRINT(.\Listings\test1_1.lst) OBJECT(.\Obj
+                      ects\test1_1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000H
+
+0000 2100              2                AJMP MAIN
+
+0100                   3                ORG 0100H
+
+0100 7830              4     MAIN:MOV  R0,#30H
+
+0102 E6                5     MOV  A,@R0
+
+0103 F9                6     MOV  R1, A
+
+0104 87F0              7     MOV  B, @R1
+
+0106 80FE              8          STOP: SJMP  STOP     ;SJMP $
+
+*** WARNING #A41 IN 8 (test1_1.asm, LINE 8): MISSING 'END' STATEMENT
+A51 MACRO ASSEMBLER  TEST1_1                                                              10/19/2017 19:32:38 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+STOP . . . . . . .  C ADDR   0106H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  1 WARNING(S), 0 ERROR(S)

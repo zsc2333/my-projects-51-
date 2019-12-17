@@ -1,0 +1,51 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              01/03/2018 16:08:17 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(D:\Keil_v5\C51) DEBUG OBJECTEXTEN
+                    -D PRINT(.\Listings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /***************************************************
+   2          *实验名：             点阵显示实验                 *
+   3          *实验说明：       在点阵上显示给定的数字值         *
+   4          *作者：                 赵世超                     *
+   5          *版本：                   V1                       *
+   6          ***************************************************/
+   7          /********************头文件调用********************/
+   8          #include <reg52.h>
+   9          #include "dis.h"
+  10          
+  11          /********************变量或数组定义****************/
+  12          
+  13          
+  14          /***************************************************
+  15          *函数名：             main                         *
+  16          *函数功能：           主函数                       *
+  17          *输入：               无                           *
+  18          *输出：               无                           *
+  19          ***************************************************/
+  20          void main ()
+  21          {
+  22   1          
+  23   1          while (1)
+  24   1          {
+  25   2            li(7,7);
+  26   2          }
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      9    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

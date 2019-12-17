@@ -1,0 +1,8 @@
+ORG 0000H
+	   AJMP MAIN
+	   ORG 0100H
+MAIN:MOV  R0,#30H
+MOV  A,@R0
+MOV  R1, A
+MOV  B, @R1
+     STOP: SJMP  STOP     ;SJMP $

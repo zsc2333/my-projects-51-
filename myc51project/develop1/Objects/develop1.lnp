@@ -1,0 +1,5 @@
+".\Objects\dis.obj",
+".\Objects\Ircon.obj",
+".\Objects\main.obj" 
+TO ".\Objects\develop1" 
+PRINT(".\Listings\develop1.m51") RAMSIZE(256) 

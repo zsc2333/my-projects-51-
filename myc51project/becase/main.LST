@@ -1,0 +1,105 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              01/05/2018 09:06:12 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          //主题：STC89C5xRC系列单片机模板
+   2          //作者：ZSC
+   3          //日期：20180102
+   4          //版本：V1
+   5          //修改说明：红外遥控led点阵控制
+   6          #define uint unsigned int
+   7          #define uchar unsigned char
+   8          //头文件
+   9          #include <reg52.h>
+  10          #include "dis.h"
+  11          #include "Ircon.h"
+  12          
+  13          //函数声明
+  14          
+  15          //主函数
+  16          void main(void)
+  17          {
+  18   1        uchar control;
+  19   1        IrInit();
+  20   1        while(1)
+  21   1          {//主循环 
+  22   2            
+  23   2      //      P0 = IrValue[2];
+  24   2            control=IrValue[2];
+  25   2                switch(control)//判断IrValue[2]，因为这个里面存放的是数据码
+  26   2                  { 
+  27   3                    case 0xE9: li(0);//按0键，显示0 
+  28   3                      break;
+  29   3                    case 0xF3: li(1); //按1键，显示1
+  30   3                      break; 
+  31   3                    case 0xE7: li(2); //按2键，显示2     
+  32   3                      break; 
+  33   3                    case 0xA1: li(3); //按3键，显示3   
+  34   3                      break;   
+  35   3                    case 0xF7: li(4); //按4键，显示4  
+  36   3                      break;
+  37   3                    case 0xE3: li(5); //按5键，显示5  
+  38   3                      break;
+  39   3                    case 0xA5: li(6); //按6键，显示6  
+  40   3                      break;
+  41   3                    case 0xBD: li(7); //按7键，显示7  
+  42   3                      break;
+  43   3                    case 0xAD: li(8); //按8键，显示8  
+  44   3                      break;
+  45   3                    case 0xB5: li(9); //按9键，显示9  
+  46   3                      break;
+  47   3                    default: li(10);
+  48   3                      break;
+  49   3                  }   
+  50   2      //          HC595SendData(0xff,0xff,0,0);  //清屏
+  51   2          }
+  52   1        
+  53   1      }
+  54          
+  55          
+C51 COMPILER V9.56.0.0   MAIN                                                              01/05/2018 09:06:12 PAGE 2   
+
+  56          //中断服务函数
+  57          //void Int0_ISR(void) interrupt 0
+  58          //{
+  59          //
+  60          //}
+  61          //
+  62          //void Timer0_ISR(void) interrupt 1
+  63          //{
+  64          //
+  65          //}
+  66          //
+  67          //void Int1_ISR(void) interrupt 2
+  68          //{
+  69          //
+  70          //}
+  71          //
+  72          //void Timer1_ISR(void) interrupt 3
+  73          //{
+  74          //
+  75          //}
+  76          //
+  77          //void UART_ISR(void) interrupt 4
+  78          //{
+  79          //  
+  80          //}
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     93    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

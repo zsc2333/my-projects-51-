@@ -1,0 +1,3 @@
+".\Objects\STARTUP.obj" 
+TO ".\Objects\squarer1" 
+PRINT(".\Listings\squarer1.m51")

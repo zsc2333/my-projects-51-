@@ -1,0 +1,7 @@
+".\Objects\cycle.obj",
+".\Objects\dis.obj",
+".\Objects\Ircon.obj",
+".\Objects\main.obj",
+".\Objects\mode3.obj" 
+TO ".\Objects\test1" 
+PRINT(".\Listings\test1.m51") RAMSIZE(256) 

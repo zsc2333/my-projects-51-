@@ -1,0 +1,60 @@
+A51 MACRO ASSEMBLER  TEST                                                                 10/18/2017 17:10:52 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.5.0
+OBJECT MODULE PLACED IN .\Objects\test.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE test.asm SET(SMALL) DEBUG PRINT(.\Listings\test.lst) OBJECT(.\Objects\t
+                      est.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000 7D0A              1     DELAY :  MOV  R5 ,#0AH
+
+0002 7E00              2              MOV  R6 , #00H
+
+0004 7FB3              3     DELAY1 : MOV   R7 ,#0B3H
+
+0006 DFFE              4              DJNZ  R7 ,$
+
+0008 DEFA              5              DJNZ  R6 ,DELAY1
+
+000A DDF8              6              DJNZ  R5 ,DELAY1
+
+                       7     
+
+0000                   8             ORG  0000H
+
+0000 020040            9             LJMP  START 
+
+0040                  10             ORG  0040H
+
+0040 74FE             11     START : MOV  A  ,#0FEH    ;
+
+0042 F590             12     LOOP  : MOV  P1 ,A        ;点亮1只LED
+
+0044 23               13             RL  A            ;左循环
+
+0045 120000           14             LCALL  DELAY     ;延时1秒
+
+0048 80F8             15             SJMP  LOOP
+
+*** WARNING #A41 IN 15 (test.asm, LINE 15): MISSING 'END' STATEMENT
+A51 MACRO ASSEMBLER  TEST                                                                 10/18/2017 17:10:52 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY. . . . . . .  C ADDR   0000H   A   
+DELAY1 . . . . . .  C ADDR   0004H   A   
+LOOP . . . . . . .  C ADDR   0042H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+START. . . . . . .  C ADDR   0040H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  1 WARNING(S), 0 ERROR(S)

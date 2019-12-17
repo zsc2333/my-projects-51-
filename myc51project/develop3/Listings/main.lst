@@ -1,0 +1,193 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              01/09/2018 16:44:11 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE main.c LARGE OPTIMIZE(8,SPEED) DEBUG OBJECTEXTEND PRINT(.\Listings\main.
+                    -lst) TABS(2)
+
+line level    source
+
+   1          //主题：红外遥控led点阵控制
+   2          //作者：ZSC
+   3          //日期：20180102
+   4          //版本：V3
+   5          //修改说明：红外遥控led点阵控制
+   6          //关键词重定义
+   7          #define uint unsigned int
+   8          #define uchar unsigned char
+   9          #define ulong unsigned long
+  10          //头文件
+  11          #include <reg52.h>
+  12          #include <math.h>
+  13          #include <intrins.h>
+  14          #include "dis.h"
+  15          #include "Ircon.h"
+  16          #include "array.h"
+  17          #include "mode3.h"
+  18          
+  19          //函数声明
+  20          void mode_1(void);//显示键盘数字
+  21          void mode2(void);//显示单片机原理及应用
+  22          //void mode3(void);//描绘图形模式
+  23          void mode_4(void);//显示描绘的图形
+  24          //主函数
+  25          void main(void)
+  26          {
+  27   1        uchar control;
+  28   1        IrInit();
+  29   1        while(1)
+  30   1          {//主循环 
+  31   2            
+  32   2      //      P0 = IrValue[2];
+  33   2            control=IrValue[2];
+  34   2                switch(control)//判断IrValue[2]，因为这个里面存放的是数据码
+  35   2                  { 
+  36   3                    case 0x0c: 
+  37   3                      {
+  38   4                        P1=0x01;
+  39   4                        mode_1();
+  40   4                      }//按1键，进模式1
+  41   3                      break; 
+  42   3                    case 0x18: 
+  43   3                        {
+  44   4                          P1=0x03;
+  45   4                          mode2();
+  46   4      //                    cycle();//显示单片机原理及应用
+  47   4                        }  //按2键，进模式2     
+  48   3                      break; 
+  49   3                    case 0x5e: 
+  50   3                        {
+  51   4                          P1=0x07;
+  52   4                          mode3();
+  53   4      
+  54   4                        } //按3键，进模式3,描绘图形模式 
+C51 COMPILER V9.56.0.0   MAIN                                                              01/09/2018 16:44:11 PAGE 2   
+
+  55   3                      break;   
+  56   3                    case 0x08: 
+  57   3                        {
+  58   4                          P1=0x0f;
+  59   4                          mode_4();
+  60   4                        } //按4键，进模式4  
+  61   3                      break;
+  62   3                    default:
+  63   3                        {
+  64   4                          P1=0x00;
+  65   4                          li(10);
+  66   4                        }   
+  67   3                      break;
+  68   3                  }   
+  69   2          }
+  70   1        
+  71   1      }
+  72          void mode_1()//显示键盘字符
+  73          {
+  74   1        uchar control;
+  75   1        while(1)
+  76   1          {//模式1循环 
+  77   2            control=IrValue[2];
+  78   2            if (control == 0x46)
+  79   2                return;
+  80   2            else
+  81   2              {
+  82   3                switch(control)//判断IrValue[2]，因为这个里面存放的是数据码
+  83   3                  { 
+  84   4                    case 0x16: li(0);//按0键，显示0 
+  85   4                      break;
+  86   4                    case 0x0c: li(1); //按1键，显示1
+  87   4                      break; 
+  88   4                    case 0x18: li(2); //按2键，显示2     
+  89   4                      break; 
+  90   4                    case 0x5e: li(3); //按3键，显示3   
+  91   4                      break;   
+  92   4                    case 0x08: li(4); //按4键，显示4  
+  93   4                      break;
+  94   4                    case 0x1c: li(5); //按5键，显示5  
+  95   4                      break;
+  96   4                    case 0x5a: li(6); //按6键，显示6  
+  97   4                      break;
+  98   4                    case 0x42: li(7); //按7键，显示7  
+  99   4                      break;
+ 100   4                    case 0x52: li(8); //按8键，显示8  
+ 101   4                      break;
+ 102   4                    case 0x4a: li(9); //按9键，显示9  
+ 103   4                      break;
+ 104   4                    case 0x45: li(11); //按电源键，显示电源  
+ 105   4                      break;
+ 106   4                    case 0x47: li(12); //按静音键，显示静音  
+ 107   4                      break;
+ 108   4                    case 0x44: li(13); //按播放键，显示播放  
+ 109   4                      break;
+ 110   4                    case 0x40: li(14); //按快退键，显示快退  
+ 111   4                      break;
+ 112   4                    case 0x43: li(15); //按快进键，显示快进  
+ 113   4                      break;
+ 114   4                    case 0x07: li(16); //按EQ键，显示EQ  
+ 115   4                      break;
+ 116   4                    case 0x09: li(17); //按V+键，显示V+  
+C51 COMPILER V9.56.0.0   MAIN                                                              01/09/2018 16:44:11 PAGE 3   
+
+ 117   4                      break;
+ 118   4                    case 0x15: li(18); //按V-键，显示V-  
+ 119   4                      break;
+ 120   4                    case 0x19: li(19); //按REP键，显示REP  
+ 121   4                      break;
+ 122   4                    case 0x0d: li(20); //按U/SD键，显示U/SD
+ 123   4                      break;
+ 124   4                    default: 
+ 125   4                    HC595SendData(0xff,0xff,0,0);  //清屏
+ 126   4                      break;
+ 127   4                  }   
+ 128   3                }
+ 129   2          }
+ 130   1      }
+ 131          void mode2()//显示单片机原理及应用
+ 132          {
+ 133   1        uchar control;
+ 134   1      //  IrInit();
+ 135   1        while(1)
+ 136   1          {//模式2循环 
+ 137   2            
+ 138   2      //      P0 = IrValue[2];
+ 139   2            control=IrValue[2];
+ 140   2            if (control == 0x46)
+ 141   2                return;
+ 142   2            else
+ 143   2              {
+ 144   3                  cycle();
+ 145   3               }
+ 146   2          }
+ 147   1      }
+ 148          void mode_4()//显示描绘的图形
+ 149          {
+ 150   1          uchar control;
+ 151   1        while(1)
+ 152   1          {//模式4循环 
+ 153   2            uchar k;
+ 154   2            control=IrValue[2];
+ 155   2            if (control == 0x46)
+ 156   2                return;
+ 157   2            else
+ 158   2              {
+ 159   3                for(k = 0; k < 16; k++)                     
+ 160   3                  {  
+ 161   4                    HC595SendData(~save[2*k +1],~save[2*k],tab100[2*k],tab100[2*k + 1]);     
+ 162   4                  };
+ 163   3               }
+ 164   2          }
+ 165   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    369    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       1
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

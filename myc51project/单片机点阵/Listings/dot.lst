@@ -1,0 +1,94 @@
+C51 COMPILER V9.56.0.0   DOT                                                               01/03/2018 16:00:22 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE DOT
+OBJECT MODULE PLACED IN .\Objects\dot.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE dot.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\dot.l
+                    -st) TABS(2) OBJECT(.\Objects\dot.obj)
+
+line level    source
+
+   1          #include "dot.h"
+   2          /**
+   3            * @brief  HC595数据发送函数
+   4            * @param  
+   5            *     BIT3 ：
+   6            *     BIT2 ：
+   7            *     BIT1 ：
+   8            *     BIT0 ：
+   9            * @retval None
+  10            */
+  11          void HC595SendData( unsigned char BIT3, 
+  12                    unsigned char BIT2, 
+  13                    unsigned char BIT1, 
+  14                    unsigned char BIT0 )
+  15          {
+  16   1        unsigned char i;
+  17   1        for (i = 0; i < 32; i++)
+  18   1        {
+  19   2          if (i > 23)
+  20   2          {
+  21   3            if ((BIT0 << (i - 24)) & 0x80)
+  22   3            {
+  23   4              MOSIO = 1;
+  24   4            }
+  25   3            else
+  26   3            {
+  27   4              MOSIO = 0;
+  28   4            }
+  29   3          }
+  30   2          else if (i > 15 & i < 24)
+  31   2          {
+  32   3            if ((BIT1 << (i - 16)) & 0x80)
+  33   3            {
+  34   4              MOSIO = 1;
+  35   4            }
+  36   3            else
+  37   3            {
+  38   4              MOSIO = 0;
+  39   4            }
+  40   3          }
+  41   2          else if (i < 16 & i > 7)
+  42   2          {
+  43   3            if ((BIT2 << (i - 8)) & 0x80)
+  44   3            {
+  45   4              MOSIO = 1;
+  46   4            }
+  47   3            else
+  48   3            {
+  49   4              MOSIO = 0;
+  50   4            }
+  51   3          }
+  52   2          else
+  53   2          {
+  54   3            if ((BIT3 << i) & 0x80)
+C51 COMPILER V9.56.0.0   DOT                                                               01/03/2018 16:00:22 PAGE 2   
+
+  55   3            {
+  56   4              MOSIO = 1;
+  57   4            }
+  58   3            else
+  59   3            {
+  60   4              MOSIO = 0;
+  61   4            }
+  62   3          }
+  63   2          S_CLK = 0;
+  64   2          S_CLK = 1;
+  65   2        }
+  66   1        R_CLK = 0;
+  67   1        R_CLK = 1;
+  68   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    178    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,83 @@
+A51 MACRO ASSEMBLER  TEST2_3                                                              10/19/2017 21:10:38 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.5.0
+OBJECT MODULE PLACED IN .\Objects\test2_3.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE test2_3.asm SET(SMALL) DEBUG PRINT(.\Listings\test2_3.lst) OBJECT(.\Obj
+                      ects\test2_3.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000 752067            1     MOV  20H, #67H
+
+0003 752145            2     MOV  21H, #45H
+
+0006 752223            3     MOV  22H, #23H
+
+0009 750101            4     MOV  01H, #01H
+
+000C 753065            5     MOV  30H, #65H
+
+000F 753172            6     MOV  31H, #72H
+
+0012 753298            7     MOV  32H, #98H
+
+0015 753389            8     MOV  33H, #89H
+
+                       9     ;;;;;;;;;Ö÷³ÌÐò ;;;;;;;;;;
+
+0018 7820             10     MOV  R0,#20H        ;ÖÃ±»¼ÓÊÊ×µØÖ·
+
+001A 7930             11           MOV  R1, #30H       ;ÖÃ¼ÓÊÊ×µØÖ·
+
+001C 7A04             12           MOV  R2, #04H       ;ÖÃ±»¼ÓÊºÍ¼ÓÊµÄ³¤¶È(×Ö½ÚÊ)
+
+001E 1122             13               ACALL   ADD_BCD    ;µ÷ÓÃ¶à×Ö½ÚÊ®½øÖÆÊ¼Ó·¨×Ó³ÌÐòADD_BCD
+
+0020 80FE             14     STOP:SJMP  STOP          ;Í£Ö¹
+
+                      15     
+
+                      16     ;;;;;;;;;; ¶à×Ö½ÚÊ®½øÖÆÊ¼Ó·¨×Ó³ÌÐò  ;;;;;;;
+
+                      17     ;Èë¿Ú:  R0¡¢R1Îª±»¼ÓÊºÍ¼ÓÊµÄÊ×µØÖ·£¬°´µÍÎ»µ½¸ßÎ»´æ·Å
+
+                      18     ;³ö¿Ú:  R0ÎªÔËËã½á¹ûµÄÊ×µØÖ·£¬Ò²°´µÍÎ»µ½¸ßÎ»´æ·Å
+
+0022 C3               19     ADD_BCD:CLR C              ;½øÎ»ÇåÁã
+
+0023 E6               20     LOOP: MOV  A, @ R0       ;Ò»×Ö½ÚµÄ±»¼ÓÊ¡úA
+
+0024 37               21     ADDC  A, @ R1       ;Ò»×Ö½Ú¼Ó
+
+0025 D4               22     DA  A              ;Ê®½øÖÆÊµ÷Õû
+
+0026 F6               23     MOV  @ R0, A       ;´æÒ»×Ö½ÚµÄÔËËã½á¹û
+
+0027 08               24     INC  R0            ;±»¼ÓÊÖ¸ÏòÏÂÒ»×Ö½Ú
+
+0028 09               25     INC  R1            ;¼ÓÊÖ¸ÏòÏÂÒ»×Ö½Ú
+
+0029 DAF8             26     DJNZ  R2 , LOOP     ;Ñ­»·¿ØÖÆ
+
+002B 22               27     RET                ;×Ó³ÌÐò·µ»Ø
+
+                      28     END
+
+A51 MACRO ASSEMBLER  TEST2_3                                                              10/19/2017 21:10:38 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ADD_BCD. . . . . .  C ADDR   0022H   A   
+LOOP . . . . . . .  C ADDR   0023H   A   
+STOP . . . . . . .  C ADDR   0020H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

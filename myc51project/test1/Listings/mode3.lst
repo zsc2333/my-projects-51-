@@ -1,0 +1,147 @@
+C51 COMPILER V9.56.0.0   MODE3                                                             01/09/2018 16:49:38 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MODE3
+OBJECT MODULE PLACED IN mode3.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE mode3.c LARGE OPTIMIZE(8,SPEED) DEBUG OBJECTEXTEND PRINT(.\Listings\mode
+                    -3.lst) TABS(2)
+
+line level    source
+
+   1          #define uint unsigned int
+   2          #define uchar unsigned char
+   3          #define ulong unsigned long
+   4          //头文件
+   5          #include <reg52.h>
+   6          #include <intrins.h>
+   7          #include <math.h>
+   8          #include <string.h>
+   9          #include "mode3.h"
+  10          #include "dis.h"
+  11          #include "Ircon.h"
+  12          
+  13          
+  14          //全局变量定义
+  15          unsigned char save[] ={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+  16          //主函数
+  17          void mode3(void)
+  18          {
+  19   1        unsigned char k=0;
+  20   1        unsigned char lie,hang=0;
+  21   1        unsigned char LED[16][16]={0};
+  22   1        unsigned char cur[]={1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+  23   1        unsigned char temp[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+  24   1      
+  25   1        while(1)
+  26   1          {//主循环 
+  27   2            if (IrValue[2] == 0x46)
+  28   2                return;
+  29   2            else
+  30   2              {
+  31   3                    for(k = 0; k < 16; k++)                         
+  32   3                       {   
+  33   4                           HC595SendData(~cur[2*k +1],~cur[2*k],tab100[2*k],tab100[2*k + 1]); 
+  34   4                           HC595SendData(~temp[2*k +1],~temp[2*k],tab100[2*k],tab100[2*k + 1]);
+  35   4                       }                                //显示正在画的内容
+  36   3                    if(keyflag==1)
+  37   3                      {
+  38   4                        P2=IrValue[2];
+  39   4                        switch(IrValue[2])
+  40   4                                {
+  41   5                                    case 0x08:keyflag=0;memset(cur,0,32);HC595SendData(0xff,0xff,0,0);
+  42   5                                              if(lie==0)lie=16;
+  43   5                                              lie--;
+  44   5                                              if(lie>=8)
+  45   5                                              cur[hang*2+1]+=pow(2,lie%8);
+  46   5                                              else
+  47   5                                              cur[hang*2]+=pow(2,lie%8);
+  48   5                                              break;    //4-光标左移
+  49   5                                    case 0x5a:keyflag=0;memset(cur,0,32);HC595SendData(0xff,0xff,0,0);
+  50   5                                              lie++;
+  51   5                                              if(lie==16)lie=0;
+  52   5                                              if(lie>=8)
+  53   5                                              cur[hang*2+1]+=pow(2,lie%8);
+  54   5                                              else
+C51 COMPILER V9.56.0.0   MODE3                                                             01/09/2018 16:49:38 PAGE 2   
+
+  55   5                                              cur[hang*2]+=pow(2,lie%8);
+  56   5                                              break;    //6-光标右移
+  57   5                                    case 0x18:keyflag=0;memset(cur,0,32);HC595SendData(0xff,0xff,0,0);
+  58   5                                              if(hang==0)hang=16;
+  59   5                                              hang--;
+  60   5                                              if(lie>=8)
+  61   5                                              cur[hang*2+1]+=pow(2,lie%8);
+  62   5                                              else
+  63   5                                              cur[hang*2]+=pow(2,lie%8);
+  64   5                                              break;    //2-光标上移
+  65   5                                    case 0x52:keyflag=0;memset(cur,0,32);HC595SendData(0xff,0xff,0,0);
+  66   5                                              hang++;
+  67   5                                              if(hang==16)hang=0;
+  68   5                                              if(lie>=8)
+  69   5                                              cur[hang*2+1]+=pow(2,lie%8);
+  70   5                                              else
+  71   5                                              cur[hang*2]+=pow(2,lie%8);
+  72   5                                              break;    //8-光标下移
+  73   5                                    case 0x1c:keyflag=0;
+  74   5                                          if(lie>=8)
+  75   5                                            {
+  76   6                                              if(LED[hang][lie]==0)
+  77   6                                              { 
+  78   7                                                temp[hang*2+1]+=pow(2,lie%8);
+  79   7                                                LED[hang][lie]=1; 
+  80   7                                              }
+  81   6                                            }
+  82   5                                          else
+  83   5                                            {
+  84   6                                              if(LED[hang][lie]==0)
+  85   6                                              {
+  86   7                                              temp[hang*2]+=pow(2,lie%8);
+  87   7                                              LED[hang][lie]=1;
+  88   7                                              };
+  89   6                                            };break;    //5-写入该点 
+  90   5                                    case 0x16:keyflag=0;
+  91   5                                        if(lie>=8)
+  92   5                                          {
+  93   6                                              if(LED[hang][lie]==1)
+  94   6                                            { 
+  95   7                                              temp[hang*2+1]-=pow(2,lie%8);
+  96   7                                              LED[hang][lie]=0; 
+  97   7                                            }
+  98   6                                          }
+  99   5                                          else
+ 100   5                                          {
+ 101   6                                          if(LED[hang][lie]==1)
+ 102   6                                            {
+ 103   7                                            temp[hang*2]-=pow(2,lie%8);
+ 104   7                                            LED[hang][lie]=0;
+ 105   7                                            };
+ 106   6                                          };break;    //0-擦除该点
+ 107   5                                    case 0x0d:keyflag=0;
+ 108   5                                        for(k=0;k<32;k++){save[k]=temp[k];}
+ 109   5                                        break;        //U/SD-将缓存数组存入指定数组
+ 110   5                                    case 0x19:keyflag=0;
+ 111   5                                        for(k=0;k<32;k++)
+ 112   5                                            {temp[k]=0x00;}
+ 113   5                                        memset(LED,0,256);
+ 114   5                                        break;        //RPT-清屏                      
+ 115   5                                } 
+ 116   4                      }
+C51 COMPILER V9.56.0.0   MODE3                                                             01/09/2018 16:49:38 PAGE 3   
+
+ 117   3                }
+ 118   2          }
+ 119   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1913    ----
+   CONSTANT SIZE    =    320    ----
+   XDATA SIZE       =     32     323
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

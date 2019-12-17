@@ -1,0 +1,182 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              01/08/2018 23:21:02 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE main.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Objects) DEBUG OBJECTEXTE
+                    -ND PRINT(.\Listings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          //主题：红外遥控led点阵控制
+   2          //作者：ZSC
+   3          //日期：20180102
+   4          //版本：V2
+   5          //修改说明：红外遥控led点阵控制
+   6          //关键词重定义
+   7          #define uint unsigned int
+   8          #define uchar unsigned char
+   9          #define ulong unsigned long
+  10          //头文件
+  11          #include <reg52.h>
+  12          #include <intrins.h>
+  13          #include <math.h>
+  14          #include <string.h>
+  15          #include "dis.h"
+  16          #include "Ircon.h"
+  17          #include "array.h"
+  18          //函数声明
+  19          //void mode1(void);//显示键盘数字
+  20          //void mode2(void);//显示单片机原理及应用
+  21          //void mode3(void);//描绘图形模式
+  22          //void mode4(void);//显示描绘图形
+  23          //全局变量定义
+  24          
+  25          //主函数
+  26          void main(void)
+  27          {
+  28   1        unsigned char k,hang=0;
+  29   1        unsigned char lie=0;
+  30   1        unsigned char LED[16][16]={0};
+  31   1        unsigned char move[]={1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  32   1                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} ;
+  33   1        unsigned char temp[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+  34   1                  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+  35   1        unsigned char tab0[] = 
+  36   1      {0x00, 0x01, 0x00, 0x02, 0x00, 0x04, 0x00, 0x08,
+  37   1       0x00, 0x10, 0x00, 0x20, 0x00, 0x40, 0x00, 0x80,
+  38   1       0x01, 0x00, 0x02, 0x00, 0x04, 0x00, 0x08, 0x00,
+  39   1       0x10, 0x00, 0x20, 0x00, 0x40, 0x00, 0x80, 0x00}; 
+  40   1        IrInit();
+  41   1        while(1)
+  42   1          {//主循环 
+  43   2            for(k = 0; k < 16; k++)                         
+  44   2               {   
+  45   3                   HC595SendData(~move[2*k +1],~move[2*k],tab0[2*k],tab0[2*k + 1]); 
+  46   3                   HC595SendData(~temp[2*k +1],~temp[2*k],tab0[2*k],tab0[2*k + 1]);
+  47   3               };//显示正在画的内容
+  48   2      //        keyflag==1;
+  49   2               if(keyflag==1)
+  50   2              {
+  51   3                P2=IrValue[2];
+  52   3                switch(IrValue[2])
+  53   3                        {
+  54   4                            case 0x08:keyflag=0;memset(move,0,32);HC595SendData(0xff,0xff,0,0);
+C51 COMPILER V9.56.0.0   MAIN                                                              01/08/2018 23:21:02 PAGE 2   
+
+  55   4                                      if(lie==0)lie=16;
+  56   4                                      lie--;
+  57   4                                      if(lie>=8)
+  58   4                                      move[hang*2+1]+=pow(2,lie%8);
+  59   4                                      else
+  60   4                                      move[hang*2]+=pow(2,lie%8);
+  61   4      //                                keyflag=0;
+  62   4                                      break;//left  光标左移
+  63   4                            case 0x5a:keyflag=0;memset(move,0,32);HC595SendData(0xff,0xff,0,0);
+  64   4                                      lie++;
+  65   4                                      if(lie==16)lie=0;
+  66   4                                      if(lie>=8)
+  67   4                                      move[hang*2+1]+=pow(2,lie%8);
+  68   4                                      else
+  69   4                                      move[hang*2]+=pow(2,lie%8);
+  70   4      //                                keyflag=0;
+  71   4                                      break;//right  光标右移
+  72   4                            case 0x18:keyflag=0;memset(move,0,32);HC595SendData(0xff,0xff,0,0);
+  73   4                                      if(hang==0)hang=16;
+  74   4                                      hang--;
+  75   4                                      if(lie>=8)
+  76   4                                      move[hang*2+1]+=pow(2,lie%8);
+  77   4                                      else
+  78   4                                      move[hang*2]+=pow(2,lie%8);
+  79   4      //                                keyflag=0;
+  80   4                                      break;//up    光标上移
+  81   4                            case 0x52:keyflag=0;memset(move,0,32);HC595SendData(0xff,0xff,0,0);
+  82   4                                      hang++;
+  83   4                                      if(hang==16)hang=0;
+  84   4                                      if(lie>=8)
+  85   4                                      move[hang*2+1]+=pow(2,lie%8);
+  86   4                                      else
+  87   4                                      move[hang*2]+=pow(2,lie%8);
+  88   4      //                                keyflag=0;
+  89   4                                      break;//down     光标下移
+  90   4                            case 0x1c:keyflag=0;
+  91   4                                  if(lie>=8)
+  92   4                                    {
+  93   5                                      if(LED[hang][lie]==0)
+  94   5                                      { 
+  95   6                                        temp[hang*2+1]+=pow(2,lie%8);
+  96   6                                        LED[hang][lie]=1; 
+  97   6                                      }
+  98   5                                    }
+  99   4                                  else
+ 100   4                                    {
+ 101   5                                      if(LED[hang][lie]==0)
+ 102   5                                      {
+ 103   6                                      temp[hang*2]+=pow(2,lie%8);
+ 104   6                                      LED[hang][lie]=1;
+ 105   6                                      };
+ 106   5                                    };break;//      写入该点
+ 107   4                            case 0x16:keyflag=0;
+ 108   4                                    if(lie>=8)
+ 109   4                                      {
+ 110   5                                          if(LED[hang][lie]==1)
+ 111   5                                        { 
+ 112   6                                          temp[hang*2+1]-=pow(2,lie%8);
+ 113   6                                          LED[hang][lie]=0; 
+ 114   6                                        }
+ 115   5                                      }
+ 116   4                                      else
+C51 COMPILER V9.56.0.0   MAIN                                                              01/08/2018 23:21:02 PAGE 3   
+
+ 117   4                                      {
+ 118   5                                      if(LED[hang][lie]==1)
+ 119   5                                        {
+ 120   6                                        temp[hang*2]-=pow(2,lie%8);
+ 121   6                                        LED[hang][lie]=0;
+ 122   6                                        };
+ 123   5                                      };break;//quiet      擦出改点
+ 124   4                        } 
+ 125   3              }                 
+ 126   2          }
+ 127   1        
+ 128   1      }
+ 129          
+ 130          //中断服务函数
+ 131          //void Int0_ISR(void) interrupt 0
+ 132          //{
+ 133          //
+ 134          //}
+ 135          //
+ 136          //void Timer0_ISR(void) interrupt 1
+ 137          //{
+ 138          //
+ 139          //}
+ 140          //
+ 141          //void Int1_ISR(void) interrupt 2
+ 142          //{
+ 143          //
+ 144          //}
+ 145          //
+ 146          //void Timer1_ISR(void) interrupt 3
+ 147          //{
+ 148          //
+ 149          //}
+ 150          //
+ 151          //void UART_ISR(void) interrupt 4
+ 152          //{
+ 153          //  
+ 154          //}
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1829    ----
+   CONSTANT SIZE    =    352    ----
+   XDATA SIZE       =   ----     355
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,181 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        01/03/2018  16:08:18  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\dis.obj TO .\Objects\display PRINT (.\Listings\display.m51) RA
+>> MSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  .\Objects\dis.obj (DIS)
+  D:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\KEIL_V5\C51\LIB\C51S.LIB (?C?OFFXADD)
+
+
+LINK MAP OF MODULE:  .\Objects\display (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000CH     UNIT         ?DT?DIS
+            DATA    0014H     0006H     UNIT         _DATA_GROUP_
+            IDATA   001AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     02A0H     UNIT         ?CO?DIS
+            CODE    0AA0H     007AH     UNIT         ?PR?_LI?DIS
+            CODE    0B1AH     006EH     UNIT         ?PR?_HC595SENDDATA?DIS
+            CODE    0B88H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0B94H     000CH     UNIT         ?C?LIB_CODE
+            CODE    0BA0H     0009H     UNIT         ?PR?MAIN?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\display (MAIN)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN                  -----    -----
+  +--> ?PR?_LI?DIS
+
+?PR?_LI?DIS                    0014H    0002H
+  +--> ?CO?DIS
+  +--> ?PR?_HC595SENDDATA?DIS
+
+?PR?_HC595SENDDATA?DIS         0016H    0004H
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/03/2018  16:08:18  PAGE 2
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\display (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:0BA0H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0BA0H         LINE#         20
+  C:0BA0H         LINE#         21
+  C:0BA0H         LINE#         23
+  C:0BA0H         LINE#         24
+  C:0BA0H         LINE#         25
+  C:0BA7H         LINE#         26
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        DIS
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        MOSIO
+  B:00B0H.5       PUBLIC        R_CLK
+  B:00B0H.6       PUBLIC        S_CLK
+  D:00A8H         PUBLIC        IE
+  D:0008H         PUBLIC        column
+  D:00B8H         PUBLIC        IP
+  C:0800H         PUBLIC        tab10
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0820H         PUBLIC        tab
+  C:0B1AH         PUBLIC        _HC595SendData
+  C:0AA0H         PUBLIC        _li
+  D:000CH         PUBLIC        dt
+  D:0010H         PUBLIC        row
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _LI
+  D:0014H         SYMBOL        x
+  D:0015H         SYMBOL        k
+  C:0AA0H         LINE#         101
+  C:0AA4H         LINE#         102
+  C:0AA4H         LINE#         105
+  C:0AA7H         LINE#         106
+  C:0AA7H         LINE#         107
+  C:0B05H         LINE#         108
+  C:0B10H         LINE#         109
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/03/2018  16:08:18  PAGE 3
+
+
+  C:0B19H         LINE#         111
+  -------         ENDPROC       _LI
+  -------         PROC          _HC595SENDDATA
+  D:0007H         SYMBOL        BT3
+  D:0005H         SYMBOL        BT2
+  D:0003H         SYMBOL        BT1
+  D:0019H         SYMBOL        BT0
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0B1AH         LINE#         114
+  C:0B1AH         LINE#         115
+  C:0B1AH         LINE#         119
+  C:0B1CH         LINE#         120
+  C:0B1CH         LINE#         121
+  C:0B27H         LINE#         122
+  C:0B2BH         LINE#         124
+  C:0B2DH         LINE#         125
+  C:0B2FH         LINE#         126
+  C:0B33H         LINE#         129
+  C:0B35H         LINE#         130
+  C:0B35H         LINE#         131
+  C:0B40H         LINE#         132
+  C:0B44H         LINE#         134
+  C:0B46H         LINE#         135
+  C:0B48H         LINE#         136
+  C:0B4CH         LINE#         139
+  C:0B4EH         LINE#         140
+  C:0B4EH         LINE#         141
+  C:0B59H         LINE#         142
+  C:0B5DH         LINE#         143
+  C:0B5FH         LINE#         144
+  C:0B61H         LINE#         145
+  C:0B65H         LINE#         148
+  C:0B67H         LINE#         149
+  C:0B67H         LINE#         150
+  C:0B73H         LINE#         151
+  C:0B79H         LINE#         152
+  C:0B7BH         LINE#         153
+  C:0B7DH         LINE#         154
+  C:0B81H         LINE#         157
+  C:0B83H         LINE#         158
+  C:0B85H         LINE#         159
+  C:0B87H         LINE#         160
+  -------         ENDPROC       _HC595SENDDATA
+  -------         ENDMOD        DIS
+
+  -------         MODULE        ?C?OFFXADD
+  C:0B94H         PUBLIC        ?C?OFFXADD
+  -------         ENDMOD        ?C?OFFXADD
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0391H BYTE (44%) *
+******************************************************************************
+
+Program Size: data=27.0 xdata=0 code=940
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

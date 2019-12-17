@@ -1,0 +1,4 @@
+TRANSFER
+".\Objects\STARTUP.obj",
+".\Objects\test.obj" 
+TO ".\Objects\test1.LIB"
